@@ -1,5 +1,5 @@
 String dataPath = "/Users/hellobodoradri/Documents/Arduino";
-String inputFile = "input.csv";
+String inputFile = "data1.csv";
 String outputFile = "output.csv";
 float pulseTreshold = 555;
 float minPulseBPM = 50;
@@ -10,10 +10,10 @@ void setup () {
   String[] lines = loadStrings(dataPath + "/" + inputFile);
   float prevPulseTime = -1;
   float prevPulse = pulseTreshold;
-  float[] averages = new float[5];
-  float counter;
+  float[] averages = {0, 0, 0, 0, 0};
+  float counter = 0;
   // Open output file.
-  output = createWriter(dataPath + outputFile);
+  PrintWriter output = createWriter(dataPath + "/" + outputFile);
   for (int i = 0; i < lines.length; i++) {
     // Split input data line into array of float values.
     float[] columns = float(split(lines[i], ','));
@@ -22,7 +22,7 @@ void setup () {
     float pulse = columns[6];
     counter += 1;
     // Aggregate values excluding the 0. index (time).
-    for (int j = 0; j < averages.length(); j++) {
+    for (int j = 0; j < averages.length; j++) {
       averages[j] += columns[j + 1];
     }
     if (prevPulse >= pulseTreshold || pulse < pulseTreshold) {
@@ -36,22 +36,22 @@ void setup () {
       prevPulseTime = time;
       continue;
     }
-    prevPulseTime = time;
     float pulseBPM = 60000 / (time - prevPulseTime);
+    prevPulseTime = time;
     if (pulseBPM < minPulseBPM || pulseBPM > maxPulseBPM) {
        // Sanity check if pulseBPM is too low or too high.
        continue;
     }
-    for (int j = 0; j < averages.length(); j++) {
+    for (int j = 0; j < averages.length; j++) {
       // Calculate and write averages to file.
       averages[j] /= counter;
-      output.write(averages[j]);
+      output.print(averages[j]);
       output.write(",");
       averages[j] = 0;
     }
     counter = 0;
     // Write pulseBPM to file.
-    output.writeln(pulseBPM);
+    output.println(pulseBPM);
   }
   output.flush();
   output.close();
