@@ -53,4 +53,6 @@ void setup () {
     // Write pulseBPM to file.
     output.writeln(pulseBPM);
   }
+  output.flush();
+  output.close();
 }
