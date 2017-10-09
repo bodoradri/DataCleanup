@@ -10,7 +10,7 @@ void setup () {
   String[] lines = loadStrings(dataPath + "/" + inputFile);
   float prevPulseTime = -1;
   float prevPulse = pulseTreshold;
-  float[] averages = new float[6];
+  float[] averages = new float[5];
   float counter;
   // Open output file.
   output = createWriter(dataPath + outputFile);
