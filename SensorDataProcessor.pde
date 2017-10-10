@@ -1,9 +1,9 @@
-String dataPath = "/Users/hellobodoradri/Documents/Arduino";
-String inputFile = "data1.csv";
-String outputFile = "output.csv";
+String dataPath = "/Users/hellobodoradri/Documents/ZhDK/3rd semester/2.Physical computing/SensorDataProcessor/";
+String inputFile = "8.csv";
+String outputFile = "hb_ju.csv";
 float pulseTreshold = 555;
-float minPulseBPM = 50;
-float maxPulseBPM = 100;
+float minPulseBPM = 60;
+float maxPulseBPM = 95;
 
 void setup () {
   // Open and read input file.
